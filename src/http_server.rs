@@ -154,11 +154,10 @@ fn each_connection_loop<T: HttpService>(stream: &mut TcpStream, mut service: T) 
                 headers = unsafe { std::mem::transmute(headers) };
                 req_buf.advance(len);
             }
-        }
-
-        if rsp_buf.is_empty() {
+        } else {
             stream.shutdown(std::net::Shutdown::Both).ok();
-        }
+	    return Ok(());
+	}
     }
 }
 
