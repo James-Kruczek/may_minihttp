@@ -157,7 +157,7 @@ fn each_connection_loop<T: HttpService>(stream: &mut TcpStream, mut service: T) 
         }
 
         if rsp_buf.is_empty() {
-            stream.wait_io();
+            stream.shutdown(std::net::Shutdown::Both).ok();
         }
     }
 }
